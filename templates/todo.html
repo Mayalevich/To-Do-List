@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                events: '/api/todos',
+                editable: false,
+                eventColor: '#378006',
+                displayEventTime: false,
+                height: 600
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        Todo List App
+    </header>
+    <div class="container">
+        <h1 class="text-center mb-4">Add Todo</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.title.label }}<br>
+                {{ form.title(size=32, class_="form-control") }}
+            </p>
+            <p>
+                {{ form.description.label }}<br>
+                {{ form.description(rows=4, class_="form-control") }}
+            </p>
+            <p>
+                {{ form.priority.label }}<br>
+                {{ form.priority(class_="form-control") }}
+            </p>
+            <p>
+                {{ form.deadline.label }}<br>
+                {{ form.deadline(class_="form-control") }}
+            </p>
+            <p>{{ form.submit(class_="btn btn-primary") }}</p>
+        </form>
+        <h2 class="text-center mb-4">Todo List</h2>
+        <ul>
+            {% for todo in todos %}
+            <li class="task">
+                <div class="task-details">
+                    <strong>{{ todo.title }}</strong><br>
+                    {{ todo.description }}<br>
+                    <em>{{ todo.priority }}</em><br>
+                    <small>{{ todo.deadline }}</small>
+                </div>
+                <div class="task-actions">
+                    <a href="{{ url_for('edit', todo_id=todo.id) }}" class="btn btn-warning">Edit</a>
+                    <form action="{{ url_for('delete', todo_id=todo.id) }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="calendar-container">
+            <h2 class="text-center mb-4">Calendar View</h2>
+            <div id="calendar"></div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 Todo List App
+    </footer>
+</body>
+
+</html>

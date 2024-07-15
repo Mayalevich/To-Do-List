@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="login-container">
+    <h1>Login</h1>
+    <form method="post" action="{{ url_for('login') }}">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.username.label }}
+            {{ form.username(size=32) }}
+        </div>
+        <div>
+            {{ form.password.label }}
+            {{ form.password(size=32) }}
+        </div>
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+    <p>
+        <a href="{{ url_for('index') }}">Home</a> |
+        <a href="{{ url_for('register') }}">Register</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <header>
+      Edit Todo
+    </header>
+    <div class="container">
+      <form method="post" action="">
+        {{ form.hidden_tag() }}
+        <p>
+          {{ form.title.label }}<br>
+          {{ form.title(size=40) }}
+        </p>
+        <p>
+          {{ form.description.label }}<br>
+          {{ form.description(rows=5, cols=40) }}
+        </p>
+        <p>
+          {{ form.priority.label }}<br>
+          {{ form.priority() }}
+        </p>
+        <p>
+          {{ form.deadline.label }}<br>
+          {{ form.deadline() }}
+        </p>
+        <p>{{ form.submit() }}</p>
+      </form>
+      <p><a href="{{ url_for('todo') }}">Back to Todo List</a></p>
+    </div>
+  </body>
+</html>
